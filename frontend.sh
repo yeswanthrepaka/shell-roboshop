@@ -26,16 +26,16 @@ VALIDATE (){
     fi
 }
 
-dnf module disable nginx -y
+dnf module disable nginx -y &>>$LOGS_FILE
 VALIDATE $? "Disabling nginx default version"
 
-dnf module enable nginx:1.24 -y
+dnf module enable nginx:1.24 -y &>>$LOGS_FILE
 VALIDATE $? "Enabling nginx 1.24 version"
 
-dnf install nginx -y
+dnf install nginx -y &>>$LOGS_FILE
 VALIDATE $? "Installing ngnix"
 
-systemctl enable nginx 
+systemctl enable nginx &>>$LOGS_FILE
 systemctl start nginx 
 VALIDATE $? "Enabling and starting nginx"
 
