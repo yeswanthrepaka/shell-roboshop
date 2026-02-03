@@ -49,7 +49,7 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip
 VALIDATE $? "Unzipping the content"
 
-rm -rf /etc/nginx/nginx.conf
+rm -rf /etc/nginx/nginx.conf.default
 
 cp $SCRIPT_NAME/nginx.conf /etc/nginx/nginx.conf
 VALIDATE $? "Copied the nginx conf file"
