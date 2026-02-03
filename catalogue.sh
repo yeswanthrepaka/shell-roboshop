@@ -26,13 +26,13 @@ VALIDATE (){
     fi
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>>$LOGS_FILE
 VALIDATE $? "Disabling nodejs old version"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOGS_FILE
 VALIDATE $? "Enabling nodejs version 20"
 
-dnf install nodejs -y 
+dnf install nodejs -y &>>$LOGS_FILE
 VALIDATE $? "Installing nodejs"
 
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
@@ -53,8 +53,34 @@ VALIDATE $? "Removing older files"
 unzip /tmp/catalogue.zip
 VALIDATE $? "Unzipping the code"
 
-npm install 
+npm install &>>$LOGS_FILE
 VALIDATE $? "Installing dependencies"
 
-# cp $SCRIPT_NAME/catalogue.service /ect/systemd/system/catalogue.service
-# VALIDATE $? "Created systemctl service"
+cp $SCRIPT_NAME/catalogue.service /ect/systemd/system/catalogue.service
+VALIDATE $? "Created systemctl service"
+
+systemctl daemon-reload
+VALIDATE $? "Daemon reload"
+
+systemctl enable catalogue &>>$LOGS_FILE
+VALIDATE $? "Enabling catalogue"
+
+systemctl start catalogue
+VALIDATE $? "Starting catalogue"
+
+cp $SCRIPT_NAME/mongo.repo /etc/yum.repos.d/mongo.repo
+
+dnf install mongodb-mongosh -y &>>$LOGS_FILE
+VALIDATE $? "Installing mongodb"
+
+INDEX=$(mongosh --host $MONGODB_HOST --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+
+    if [ $INDEX -le 0 ]; then
+        mongosh --host $MONGODB_HOST </app/db/master-data.js
+        VALIDATE $? "Loading products"
+    else
+        echo -e "$Y Products already loaded... SKIPPING $N"
+    fi
+
+systemctl restart catalogue
+VALIDATE $? "Restarting catalogue"
