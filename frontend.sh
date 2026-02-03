@@ -8,7 +8,7 @@ G="\e[32m"
 Y="\e[33m"
 B="\e[34m"
 N="\e[0m"
-SCRIPT_NAME=$pwd
+SCRIPT_NAME=$PWD
 
 if [ $USERID -ne 0 ]; then
     echo -e " $R Please run the script with root user $N " | tee -a $LOGS_FILE
@@ -49,7 +49,7 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip
 VALIDATE $? "Unzipping the content"
 
-# rm -rf /etc/nginx/nginx.conf
+rm -rf /etc/nginx/nginx.conf
 
 cp $SCRIPT_NAME/nginx.conf /etc/nginx/nginx.conf
 VALIDATE $? "Copied the nginx conf file"
