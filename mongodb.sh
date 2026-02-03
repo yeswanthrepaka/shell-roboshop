@@ -10,7 +10,7 @@ B="\e[34m"
 N="\e[0m"
 
 if [$USERID -ne 0]; then
-    echo -e ("$R Please run the script with root user $N") | tee -a $LOGS_FILE
+    echo -e ("$R Please run the script with root user $N ") | tee -a $LOGS_FILE
     exit 1
 fi
 
