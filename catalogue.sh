@@ -9,6 +9,7 @@ Y="\e[33m"
 B="\e[34m"
 N="\e[0m"
 SCRIPT_NAME=$PWD
+MONGODB_HOST="mongodb.repaka.online"
 
 if [ $USERID -ne 0 ]; then
     echo -e " $R Please run the script with root user $N " | tee -a $LOGS_FILE
