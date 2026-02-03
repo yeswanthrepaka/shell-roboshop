@@ -9,7 +9,7 @@ Y="\e[33m"
 B="\e[34m"
 N="\e[0m"
 
-if [$USERID -ne 0]; then
+if [ $USERID -ne 0 ]; then
     echo -e " $R PleasSe run the script with root user $N " | tee -a $LOGS_FILE
     exit 1
 fi
@@ -17,7 +17,7 @@ fi
 mkdir -p $LOGS_FOLDER
 
 VALIDATE (){
-    if [$1 -ne 0 ]; then
+    if [ $1 -ne 0 ]; then
         echo -e "$R $2 ... FAILURE $N" | tee -a $LOGS_FILE
         exit 1
     else
