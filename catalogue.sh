@@ -41,7 +41,7 @@ id roboshop &>>$LOGS_FILE
         useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
         VALIDATE $? "Adding roboshop user"
     else
-        echo -e "$Y Roboshop user already exits... SKIPPING $N"
+        echo -e "$Y Roboshop user already exists... SKIPPING $N"
     fi
 
 mkdir -p /app
