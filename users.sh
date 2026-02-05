@@ -61,7 +61,7 @@ VALIDATE $? "Unzipping the code"
 npm install
 VALIDATE $? "Installing dependencies"
 
-cp $SCRIPT_NAME/users.service /etc/systemd/system/users.service
+cp $SCRIPT_NAME/user.service /etc/systemd/system/user.service
 VALIDATE $? "Creating systemctl services"
 
 systemctl daemon-reload
